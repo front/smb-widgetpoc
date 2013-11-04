@@ -8,8 +8,8 @@
     // $locationProvider.hashPrefix('!');
     // $locationProvider.html5Mode(true);
 
-    $routeProvider.
-    when('/', {
+    $routeProvider
+    .when('/', {
       controller: 'IndexCtrl',
       templateUrl: './partials/index.html'
     })
@@ -17,10 +17,6 @@
       controller: 'WidgetCtrl',
       template: '<div ng-include="include"></div>'
     })
-    // .when('/load', {
-    //   controller: 'LoaderCtrl',
-    //   templateUrl: './template.html'
-    // }).
     .otherwise({
       redirectTo: '/'
     });
@@ -38,24 +34,7 @@
 
   app.controller('WidgetCtrl', function ($scope, $routeParams, smbFetcher) {
     $scope.include = './widgets/' + $routeParams.templ;
-
-
   });
-
-  // app.controller('LoaderCtrl', function ($http, $templateCache, $controller) {
-
-  //   var element = angular.element();
-
-  //   $http.get( tpl, { cache: $templateCache } )
-  //   .then( function( response ) {
-  //     templateScope = scope.$new();
-  //     templateCtrl = $controller( ctrl, { $scope: templateScope } );
-  //     element.html( response.data );
-  //     element.children().data('$ngControllerController', templateCtrl);
-  //     $compile( element.contents() )( templateScope );
-  //   });
-
-  // });
 
   app.factory('smbFetcher', function ($http, $q) {
     return {
