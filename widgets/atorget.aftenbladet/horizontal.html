@@ -1,44 +1,77 @@
 
 <!-- <h1> HORIZONTAL atorget.aftenbladet.no </h1> -->
+
+<link rel="stylesheet" href="js/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="js/owl-carousel/owl.theme.css">
 <style>
   body, ul, li {
     margin: 0;
     padding: 0;
   }
-  div[smb-ad] {
+/*  div[smb-ad] {
     width: 920px;
     height: 140px;
     background: #eee;
-  }
+  }*/
 
-  li.ad {
+  div.ad {
     position: relative;
     display: block;
     float: left;
-    width: 230px;
+    width: 100%;
     height: 140px;
   }
-  li.ad .image {
+  div.ad .image {
     position: relative;
     overflow: hidden;
     height: 140px;
-    width: 230px;
+    width: 100%;
   }
-  li.ad .image img {
+  div.ad .image img {
+    min-width: 100%;
     height: 140px;
   }
 
-  li.ad .info {
+  div.ad .info {
     position: absolute;
     bottom: 0;
     padding: 6px;
     background: rgba(0,0,0,0.5);
   }
-  li.ad .info span {
+  div.ad .info span {
     color: #fff;
   }
 
-</style>
-<div smb-ad cat="rehabilitering" count="4"></div>
+  #owl-demo {
+    width: 100%;
+    position: relative;
+  }
+  #owl-demo .item {
+    margin: 0px;
+  }
+  #owl-demo .item img{
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 
-<div smb-script src="widgets/atorget.aftenbladet/horizontal.js"></div>
+</style>
+
+<div smb-ad cat="rehabilitering" count="8" content="'partials/ad-divs.html'">
+  <div id="owl-demo">
+  <div class="ad" ng-repeat="ad in items">
+    <div class="image">
+      <img src="http://virk-admin.arbeidoghelse.no/sites/default/files/styles/full/public/{{ad.image}}">
+    </div>
+    <div class="info">
+      <span ng-bind="ad.title"></span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div smb-script src="js/owl-carousel/owl.carousel.min.js"></div>
+<div smb-script async="true" src="widgets/atorget.aftenbladet/horizontal.js"></div>
+
+
