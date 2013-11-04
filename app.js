@@ -1,9 +1,7 @@
 (function () {
-
   var app = angular.module('smb-app', ['ngRoute']);
 
   app.config(function ($httpProvider, $locationProvider, $routeProvider) {
-
     $httpProvider.defaults.useXDomain = true;
     // $locationProvider.hashPrefix('!');
     // $locationProvider.html5Mode(true);
@@ -24,12 +22,7 @@
   });
 
   app.controller('IndexCtrl', function ($scope, smbFetcher) {
-    smbFetcher.getAds('leiar', 2)
-    .then(function (data) {
-      $scope.items = data;
-    }, function (err) {
-      console.log('IndexErr', err);
-    });
+
   });
 
   app.controller('WidgetCtrl', function ($scope, $routeParams, smbFetcher) {
@@ -91,7 +84,7 @@
     };
   });
 
-  app.directive('smbScript', function ($http) {
+  app.directive('smbScript', function ($http, $timeout) {
     function loadScript(scope, element) {
       console.log('Load script!');
       $http.get(scope.src)
@@ -112,7 +105,7 @@
           return loadScript(scope, element);
         }
         scope.$on('loadScript', function () {
-          setTimeout(function () {
+          $timeout(function () {
             loadScript(scope, element);
           }, 500);
         });
