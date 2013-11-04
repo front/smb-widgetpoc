@@ -1,45 +1,8 @@
 
 <!-- <h1> VERTICAL atorget.aftenbladet.no </h1> -->
-<style>
-  body, ul, li {
-    margin: 0;
-    padding: 0;
-  }
-  div[smb-ad] {
-    width: 160px;
-    height: 600px;
-    background: #eee;
-  }
 
-  li.ad {
-    position: relative;
-    display: block;
-    float: left;
-    width: 160px;
-    height: 200px;
-  }
-  li.ad .image {
-    position: relative;
-    overflow: hidden;
-    height: 200px;
-    width: 160px;
-  }
-  li.ad .image img {
-    height: 200px;
-    max-width: none;
-  }
+<div smb-style src="widgets/atorget.aftenbladet/vertical.css"></div>
 
-  li.ad .info {
-    position: absolute;
-    bottom: 0;
-    padding: 6px;
-    background: rgba(0,0,0,0.5);
-  }
-  li.ad .info span {
-    color: #fff;
-  }
-
-</style>
 <div smb-ad cat="helse" count="3">
   <ul>
     <li class="ad" ng-repeat="ad in items">
