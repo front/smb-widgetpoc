@@ -98,7 +98,9 @@
       controller: function ($scope) {
         smbFetcher.getAds( $scope.cat, +$scope.count)
         .then(function (data) {
+          console.log('Got data!');
           $scope.items = data;
+          $scope.$emit('hasData');
         },
         function (err) {
           console.log('Err:', err);
@@ -108,6 +110,31 @@
 
       }
     };
+  });
+
+  app.directive('smbScript', function () {
+    return {
+      restrict: 'A',
+      scope: {
+        src: '@src'
+      },
+      template: '',
+      replace: false,
+      link: function (scope, element) {
+        scope.$on('loadScript', function () {
+          console.log('Load script!');
+          var script = $('<script type="text/javascript"></script>');
+          script.attr('src', scope.src);
+          element.append(script);
+        });
+      }
+    };
+  });
+
+  app.run(function ($rootScope) {
+    $rootScope.$on('hasData', function () {
+      $rootScope.$broadcast('loadScript');
+    });
   });
 
 })();
