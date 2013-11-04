@@ -118,7 +118,6 @@
       $http.get(scope.src)
       .success(function (data) {
         var script = $('<script type="text/javascript"></script>');
-        // script.attr('src', scope.src);
         script.html(data);
         element.append(script);
       });
@@ -148,13 +147,13 @@
       scope: {
         src: '@src'
       },
+      template: '<style></style>',
+      replace: true,
       link: function (scope, element) {
         console.log('Load style!');
         $http.get(scope.src)
         .success(function (data) {
-          var style = $('<style></style>');
-          style.html(data);
-          element.append(style);
+          element.html(data);
         });
       }
     };
