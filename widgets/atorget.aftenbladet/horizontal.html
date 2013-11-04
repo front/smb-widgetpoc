@@ -59,16 +59,15 @@
 
 <div smb-ad cat="rehabilitering" count="8" content="'partials/ad-divs.html'">
   <div id="owl-demo">
-  <div class="ad" ng-repeat="ad in items">
-    <div class="image">
-      <img src="http://virk-admin.arbeidoghelse.no/sites/default/files/styles/full/public/{{ad.image}}">
-    </div>
-    <div class="info">
-      <span ng-bind="ad.title"></span>
+    <div class="ad" ng-repeat="ad in items">
+      <div class="image">
+        <img src="http://virk-admin.arbeidoghelse.no/sites/default/files/styles/full/public/{{ad.image}}">
+      </div>
+      <div class="info">
+        <span ng-bind="ad.title"></span>
+      </div>
     </div>
   </div>
-</div>
-
 </div>
 
 <div smb-script src="js/owl-carousel/owl.carousel.min.js"></div>
