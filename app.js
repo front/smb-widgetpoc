@@ -85,56 +85,63 @@
     };
   });
 
-  app.directive('smbAd', function (smbFetcher) {
+  app.directive('smbAd', function (smbFetcher, $rootScope) {
     return {
       restrict: 'A',
+      transclude: true,
       scope: {
         cat: '@cat',
         count: '@count'
       },
-      templateUrl: './partials/ad-list.html',
-      replace: false,
-      transclude: true,
+      template: '<div ng-transclude></div>',
       controller: function ($scope) {
-        smbFetcher.getAds( $scope.cat, +$scope.count)
+
+      },
+      link: function (scope, element, attrs) {
+        element.attr('ng-include', '\'' + scope.content + '\'');
+        smbFetcher.getAds( scope.cat, +scope.count)
         .then(function (data) {
           console.log('Got data!');
-          $scope.items = data;
-          $scope.$emit('hasData');
+          $rootScope.items = data;
+          $rootScope.$broadcast('loadScript');
         },
         function (err) {
           console.log('Err:', err);
         });
-      },
-      link: function (scope, element, attrs) {
-
       }
     };
   });
 
   app.directive('smbScript', function () {
+    function loadScript(scope, element) {
+      console.log('Load script!');
+      var script = $('<script type="text/javascript"></script>');
+      script.attr('src', scope.src);
+      element.append(script);
+    };
     return {
       restrict: 'A',
       scope: {
-        src: '@src'
+        src: '@src',
+        async: '@async'
       },
-      template: '',
-      replace: false,
       link: function (scope, element) {
+        if(!scope.async) {
+          return loadScript(scope, element);
+        }
         scope.$on('loadScript', function () {
-          console.log('Load script!');
-          var script = $('<script type="text/javascript"></script>');
-          script.attr('src', scope.src);
-          element.append(script);
+          setTimeout(function () {
+            loadScript(scope, element);
+          }, 500);
         });
       }
     };
   });
 
-  app.run(function ($rootScope) {
-    $rootScope.$on('hasData', function () {
-      $rootScope.$broadcast('loadScript');
-    });
-  });
+  // app.run(function ($rootScope) {
+  //   $rootScope.$on('hasData', function () {
+  //     $rootScope.$broadcast('loadScript');
+  //   });
+  // });
 
 })();
