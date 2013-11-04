@@ -33,7 +33,7 @@
       $scope.items = data;
     }, function (err) {
       console.log('IndexErr', err);
-    })
+    });
   });
 
   app.controller('WidgetCtrl', function ($scope, $routeParams, smbFetcher) {
@@ -112,13 +112,17 @@
     };
   });
 
-  app.directive('smbScript', function () {
+  app.directive('smbScript', function ($http) {
     function loadScript(scope, element) {
       console.log('Load script!');
-      var script = $('<script type="text/javascript"></script>');
-      script.attr('src', scope.src);
-      element.append(script);
-    };
+      $http.get(scope.src)
+      .success(function (data) {
+        var script = $('<script type="text/javascript"></script>');
+        // script.attr('src', scope.src);
+        script.html(data);
+        element.append(script);
+      });
+    }
     return {
       restrict: 'A',
       scope: {
@@ -138,10 +142,22 @@
     };
   });
 
-  // app.run(function ($rootScope) {
-  //   $rootScope.$on('hasData', function () {
-  //     $rootScope.$broadcast('loadScript');
-  //   });
-  // });
+  app.directive('smbStyle', function ($http) {
+    return {
+      restrict: 'A',
+      scope: {
+        src: '@src'
+      },
+      link: function (scope, element) {
+        console.log('Load style!');
+        $http.get(scope.src)
+        .success(function (data) {
+          var style = $('<style></style>');
+          style.html(data);
+          element.append(style);
+        });
+      }
+    };
+  });
 
 })();
